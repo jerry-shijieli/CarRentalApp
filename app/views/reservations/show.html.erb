@@ -1,0 +1,66 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Car Plate Number:</strong>
+  <%=  Car.find(@reservation.car_id).licensePlateNumber %>
+</p>
+
+<p>
+  <strong>Checkouttime:</strong>
+  <%= @reservation.checkOutTime %>
+</p>
+
+<% if @reservation.reservationStatus == "Awaiting" %>
+    <p>
+      <strong>Expectedreturntime:</strong>
+      <%= @reservation.expectedReturnTime %>
+    </p>
+<% end %>
+
+<% if @reservation.reservationStatus != "Awaiting" %>
+
+    <% if @reservation.reservationStatus != "Cancel" %>
+        <p>
+          <strong>Pickuptime:</strong>
+          <%= @reservation.pickUpTime %>
+        </p>
+    <% end %>
+
+    <% if @reservation.reservationStatus == "Complete" %>
+        <p>
+          <strong>Returntime:</strong>
+          <%= @reservation.returnTime %>
+        </p>
+    <% end %>
+
+    <% if @reservation.reservationStatus == "Active" %>
+        <p>
+          <strong>Expectedreturntime:</strong>
+          <%= @reservation.expectedReturnTime %>
+        </p>
+    <% end %>
+
+<% end %>
+
+<p>
+  <strong>Reservationstatus:</strong>
+  <%= @reservation.reservationStatus %>
+</p>
+
+
+<% # buttons that display on customer view %>
+<% if @reservation.reservationStatus == "Awaiting" %>
+    <%= button_to "pickup", pickup_reservation_path(@reservation), :method => :put %>
+<% end %>
+
+<% if @reservation.reservationStatus == "Active" %>
+    <%= button_to "return", returncar_reservation_path(@reservation), :method => :put %>
+<% end %>
+
+<%if isAdmin? || isSuperAdmin? %>
+  <%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+  <%= link_to 'Delete', @reservation, method: :delete, data: { confirm: "Delete this reservation?" } %> |
+<% elsif isCustomer? && !["Active","Complete","Cancel"].include?(@reservation.reservationStatus) %>
+  <%= link_to 'Cancel', edit_reservation_path(@reservation) %> |
+<% end %>
+<%= link_to 'Back', reservations_path %>

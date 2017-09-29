@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Rails CarRentalApp: development">
+  <database-model serializer="dbm" rdbms="SQLITE" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="main">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <collation id="3" parent="1" name="BINARY"/>
+    <collation id="4" parent="1" name="NOCASE"/>
+    <collation id="5" parent="1" name="RTRIM"/>
+    <table id="6" parent="2" name="ar_internal_metadata"/>
+    <table id="7" parent="2" name="cars"/>
+    <table id="8" parent="2" name="reservations"/>
+    <table id="9" parent="2" name="schema_migrations"/>
+    <table id="10" parent="2" name="sqlite_master">
+      <System>1</System>
+    </table>
+    <table id="11" parent="2" name="sqlite_sequence">
+      <System>1</System>
+    </table>
+    <table id="12" parent="2" name="users"/>
+    <column id="13" parent="6" name="key">
+      <DataType>varchar|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="14" parent="6" name="value">
+      <Position>1</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="15" parent="6" name="created_at">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="16" parent="6" name="updated_at">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="17" parent="6" name="sqlite_autoindex_ar_internal_metadata_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>key</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="18" parent="6">
+      <ColNames>key</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_ar_internal_metadata_1</UnderlyingIndexName>
+    </key>
+    <column id="19" parent="7" name="id">
+      <DataType>INTEGER|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="20" parent="7" name="licensePlateNumber">
+      <Position>1</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="21" parent="7" name="manufacturer">
+      <Position>2</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="22" parent="7" name="model">
+      <Position>3</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="23" parent="7" name="hourlyRentalRate">
+      <Position>4</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="24" parent="7" name="style">
+      <Position>5</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="25" parent="7" name="location">
+      <Position>6</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="26" parent="7" name="status">
+      <Position>7</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="27" parent="7" name="created_at">
+      <Position>8</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="28" parent="7" name="updated_at">
+      <Position>9</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="29" parent="7">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="30" parent="8" name="id">
+      <DataType>INTEGER|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="31" parent="8" name="registrationNumber">
+      <Position>1</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="32" parent="8" name="checkOutTime">
+      <Position>2</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="33" parent="8" name="pickUpTime">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="34" parent="8" name="expectedReturnTime">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="35" parent="8" name="returnTime">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="36" parent="8" name="reservationStatus">
+      <Position>6</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="37" parent="8" name="user_id">
+      <Position>7</Position>
+      <DataType>integer|0</DataType>
+    </column>
+    <column id="38" parent="8" name="car_id">
+      <Position>8</Position>
+      <DataType>integer|0</DataType>
+    </column>
+    <column id="39" parent="8" name="created_at">
+      <Position>9</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="40" parent="8" name="updated_at">
+      <Position>10</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="41" parent="8" name="index_reservations_on_user_id">
+      <ColNames>user_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <index id="42" parent="8" name="index_reservations_on_car_id">
+      <ColNames>car_id</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="43" parent="8">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="44" parent="9" name="version">
+      <DataType>varchar|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="45" parent="9" name="sqlite_autoindex_schema_migrations_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>version</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="46" parent="9">
+      <ColNames>version</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_schema_migrations_1</UnderlyingIndexName>
+    </key>
+    <column id="47" parent="10" name="type">
+      <DataType>text|0</DataType>
+    </column>
+    <column id="48" parent="10" name="name">
+      <Position>1</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="49" parent="10" name="tbl_name">
+      <Position>2</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="50" parent="10" name="rootpage">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+    </column>
+    <column id="51" parent="10" name="sql">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="52" parent="11" name="name"/>
+    <column id="53" parent="11" name="seq">
+      <Position>1</Position>
+    </column>
+    <column id="54" parent="12" name="id">
+      <DataType>INTEGER|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="55" parent="12" name="name">
+      <Position>1</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="56" parent="12" name="email">
+      <Position>2</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="57" parent="12" name="password">
+      <Position>3</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="58" parent="12" name="created_at">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="59" parent="12" name="updated_at">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="60" parent="12">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

@@ -1,0 +1,32 @@
+<% provide(:title, 'All reservations') %>
+<h1>View and Search reservations</h1>
+
+<%= search_form_for @q_reservations do |f| %>
+  
+  <%= f.label "User id and name: " %>
+  <% if isSuperAdmin? %>
+    <%= f.collection_select :user_id_eq, User.all, :id, lambda {|u| "#{u.id} - #{u.name}"}, {:prompt => "Please select user id"} %><br>
+  <% elsif isAdmin? %>
+    <%= f.collection_select :user_id_eq, User.where.not(role: "SuperAdmin"), :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select a user"} %><br>
+  <% else %>
+    <%= "#{current_user.id}- #{current_user.name}" %>
+  <% end %>
+  <%= f.label "Car licensePlateNumber: " %>
+  <%= f.collection_select :car_id_eq, Car.all, :id, lambda {|c| "#{c.licensePlateNumber}"}, {:prompt => "Please select a car"} %><br>
+  <%= submit_tag 'Search', name: nil, class: "btn btn-primary" %>
+  
+<% end %>
+<br>
+
+<%= will_paginate %>
+
+<%= content_tag :table, class: 'table' do %>
+  <%= content_tag :thead, display_reservation_sorted_column_headers(@q_reservations), nil, false  %>
+  <%= content_tag :tbody, display_reservation_search_results(@reservations), nil, false  %>
+<% end %>
+
+<%= will_paginate %>
+
+<br>
+
+<%= link_to 'New Reservation', cars_path %>

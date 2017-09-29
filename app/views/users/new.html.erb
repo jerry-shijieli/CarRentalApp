@@ -1,0 +1,10 @@
+<% provide(:title, "Sign up") %>
+<% if logged_in? %>
+    <h1>New user profile</h1>
+<% else %>
+    <h1>Sign up</h1>
+<% end %>
+
+<%= render 'form' %>
+
+<%= link_to 'List', users_path %>

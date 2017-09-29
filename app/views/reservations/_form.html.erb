@@ -1,0 +1,47 @@
+<%= form_with(model: reservation, local: true) do |form| %>
+  <% if reservation.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+        <ul>
+          <% reservation.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+
+  <% if reservation.car_id.blank? %>
+    <% car_id = params[:car_id] %>
+  <% else %>
+    <% car_id = reservation.car_id %>
+  <% end %>
+  
+  <%= form.label "Car plate number: " %>
+  <%= Car.find(car_id).licensePlateNumber %><br>
+  
+  <%= form.hidden_field :car_id, value: car_id %>
+  <% if isSuperAdmin? %>
+    <%= form.label "User id and name: " %>
+    <%= form.collection_select :user_id, User.all, :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select user id"} %><br>
+  <% elsif isAdmin? %>
+    <%= form.label "User id and name: " %>
+    <%= form.collection_select :user_id, User.where.not(role: "SuperAdmin"), :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select user id"} %><br>
+  <% else %>
+    <%= form.hidden_field :user_id, value: session[:user_id] %><br>
+  <% end %>
+  
+  <%= form.label "Check out time:" %><br>
+  <%= form.datetime_select :checkOutTime, id: :reservation_checkOutTime %><br>
+
+  <%= form.label "Expected return time:" %> <br>
+  <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %><br>
+  
+  <% if isAdmin? || isSuperAdmin? %>
+    <%= form.label "Reservation status:" %> <br>
+    <%= form.collection_select :reservationStatus, Reservation.reservationStatuses, :first, :first, {:prompt => "Please select reservation status"} %><br>
+  <% end %>
+
+  <%= form.submit "Make a reservation", class: "btn btn-primary" %><br>
+    
+<% end %>

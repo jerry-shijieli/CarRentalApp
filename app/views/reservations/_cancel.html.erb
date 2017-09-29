@@ -1,0 +1,30 @@
+
+<%= form_for @reservation, url: {action: "cancel"}, method: :post do |form| %>
+  <% if @reservation.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+        <ul>
+          <% @reservation.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+  
+  <%= form.label "Car plate number: " %>
+  <%= Car.find(@reservation.car_id).licensePlateNumber %><br>
+  
+  <%= form.label "User id and name: " %>
+  <% user = User.find(@reservation.user_id) %>
+  <%= "#{user.id} - #{user.name}" %><br>
+  
+  <%= form.label "Check out time:" %><br>
+  <%= @reservation.checkOutTime %><br>
+
+  <%= form.label "Expected return time:" %> <br>
+  <%= @reservation.expectedReturnTime %><br>
+
+  <%= form.submit "Cancel this reservation", class: "btn btn-primary", data: { confirm: 'Cancel this reservation?' }%><br>
+    
+<% end %>

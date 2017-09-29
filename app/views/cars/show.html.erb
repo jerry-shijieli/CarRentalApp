@@ -1,0 +1,35 @@
+<% provide(:title, @car.manufacturer+' - '+@car.model) %>
+
+<h1>
+  <%= @car.manufacturer %>
+</h1>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="car_info">
+      
+        <%= label_tag "Model" %> :
+        <%= @car.model %><br>
+        <%= label_tag "License #" %> :
+        <%= @car.licensePlateNumber %><br>
+        <%= label_tag "Hourly Rent Rate" %> :
+        <%= '$%.2f per hour' % @car.hourlyRentalRate %><br>
+        <%= label_tag "Car Style" %> :
+        <%= @car.style %><br>
+        <%= label_tag "Location" %> :
+        <%= @car.location %><br>
+        <%= label_tag "Status" %> :
+        <%= @car.status %><br>
+      
+    </section>
+  </aside>
+</div>
+
+<% if @car.isAvailable? %>
+  <%= link_to 'Reserve', new_reservation_path(:car_id => @car.id) %> |
+<% end %>
+<% if isAdmin? || isSuperAdmin? %>
+  <%= link_to 'Edit', edit_car_path(@car) %> |
+  <%= link_to "Delete", @car, method: :delete, data: { confirm: "Delete this car?" } %> |
+<% end %>
+<%= link_to 'List', cars_path %> |
+<%= link_to 'Back', :back %>

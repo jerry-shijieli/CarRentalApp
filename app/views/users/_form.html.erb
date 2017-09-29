@@ -1,0 +1,52 @@
+
+  <div class="form-group">
+    <%= form_for(@user) do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            The form contains <%= pluralize(@user.errors.count, "error") %>.
+          </div>
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <br>
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+      <br>
+      <% if !logged_in? || current_user?(@user) %>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+        <br>
+        <%= f.label :password_confirmation, "Confirmation" %>
+        <%= f.password_field :password_confirmation %>
+        <br>
+      <% else %>
+        <%= f.hidden_field :password, value: "123456" %>
+        <%= f.hidden_field :password_confirmation, value: "123456" %>
+      <% end %>
+      <% if isAdmin? || isSuperAdmin? %>
+        <%= f.label :rentalCharge %>
+        <%= f.number_field :rentalCharge, min: 0, step: 0.01 %><br>
+      <% end %>
+      <% if logged_in? && isAdmin? %>
+        <%= f.label :role %>
+        <%= f.collection_select :role, User.roles.except(:SuperAdmin), :first, :first, {:prompt => "Please select role"} %><br>
+        <%= f.label "Available to rent car" %>
+        <%= f.collection_select :available, {false=>0, true=>1}, :first, :first, {:prompt => "Please select role"} %><br>
+      <% elsif logged_in? && isSuperAdmin? %>
+        <%= f.label :role %>
+        <%= f.collection_select :role, User.roles, :role, :role, {:prompt => "Please select role"} %><br>
+        <%= f.label "Available to rent car" %>
+        <%= f.collection_select :available, {false=>0, true=>1}, :first, :first, {:prompt => "Please select role"} %><br>
+      <% end %>
+      <br>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+  </div>

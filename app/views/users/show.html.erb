@@ -1,0 +1,32 @@
+<% provide(:title, @user.name) %>
+
+<h1>
+  <%= @user.name %><br>
+</h1>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <div>
+        <% if true %>
+          <%= label_tag :email %> :
+          <%= @user.email %><br>
+          <%= label_tag "Total rental charge" %> :
+          <%= '%.2f' % @user.rentalCharge %><br>
+          <%= label_tag "Available to rent car?" %>
+          <%= (@user.available)? "Yes": "No" %><br>
+          <%= label_tag :notification %> : 
+          <%= @user.notification %>
+        <% end %>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<% if isAdmin? || isSuperAdmin? %>
+  <% if !current_user?(@user) %>
+    <%= link_to "Delete", @user, method: :delete, data: { confirm: "Delete this user?" } %> |
+  <% end %>
+  <%= link_to 'List', users_path %> |
+<% end %>
+<%= link_to 'Back', :back %>
