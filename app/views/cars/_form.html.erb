@@ -21,18 +21,25 @@
       <%= f.label :model %>
       <%= f.text_field :model %>
       <br>
-      <%= f.label :hourlyRentalRate %>
-      <%= f.number_field :hourlyRentalRate, min: 0, step: 0.01 %>
-      <br>
+      <% if isAdmin? || isSuperAdmin? %>
+        <%= f.label :hourlyRentalRate %>
+        <%= f.number_field :hourlyRentalRate, min: 0, step: 0.01 %><br>
+      <% elsif isCustomer? %>
+        <%= f.hidden_field :hourlyRentalRate, value: 0 %>
+      <% end %>
       <%= f.label :style %>
       <%= f.collection_select :style, Car.styles, :first, :first, {:prompt => "Please select car status"} %>
       <br>
       <%= f.label :location %>
       <%= f.text_field :location %>
       <br>
-      <%= f.label :status %>
-      <%= f.collection_select :status, Car.statuses, :first, :first, {:prompt => "Please select car status"} %> 
-      <br>
+      <% if isAdmin? || isSuperAdmin? %>
+        <%= f.label :status %>
+        <%= f.collection_select :status, Car.statuses, :first, :first, {:prompt => "Please select car status"} %><br>
+      <% elsif isCustomer? %>
+        <%= f.hidden_field :status, value: :Suggested %>
+      <% end %>
+      
       <%= f.submit "Submit car info", class: "btn btn-primary" %>
     <% end %>
     

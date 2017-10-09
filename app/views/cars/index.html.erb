@@ -9,9 +9,13 @@
   <%= f.label :model %>
   <%= f.collection_select :model_cont, Car.select("distinct model"), :model, :model, {:include_blank => "Please select car model"} %><br>
   <%= f.label :style %>
-  <%= f.collection_select :style_cont, Car.select("distinct style"), :style, :style, {:include_blank => "Please select car style"} %><br>
+  <%= f.collection_select :style_cont, Car.styles, :first, :first, {:include_blank => "Please select car style"} %><br>
   <%= f.label :status %>
-  <%= f.collection_select :status_cont, Car.select("distinct status"), :status, :status, {:include_blank => "Please select car status"} %><br>
+  <% if isAdmin? || isSuperAdmin? %>
+    <%= f.collection_select :status_cont, Car.statuses, :first, :first, {:include_blank => "Please select car status"} %><br>
+  <% elsif isCustomer? %>
+    <%= f.collection_select :status_cont, Car.statuses.except(:Suggested), :first, :first, {:include_blank => "Please select car status"} %><br>
+  <% end %>
   <%= f.submit "Search", class: "btn btn-primary" %>
 <% end %>
 

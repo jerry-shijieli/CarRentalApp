@@ -1,13 +1,17 @@
 class CarsController < ApplicationController
   include CarsHelper
   before_action :logged_in_user, only: [:index, :new, :show, :edit, :update, :destroy]
-  before_action :logged_in_as_admin, only: [:new, :destroy, :edit, :update]
+  before_action :logged_in_as_admin, only: [ :destroy, :edit, :update]
   before_action :can_destroy, only: [:destroy]
   
   # GET /cars
   # GET /cars.json
   def index
-    @q_cars = Car.ransack(params[:q])
+    if isAdmin? || isSuperAdmin?
+      @q_cars = Car.ransack(params[:q])
+    elsif isCustomer?
+      @q_cars = Car.where.not(status: "Suggested").ransack(params[:q])
+    end
     @cars = @q_cars.result().paginate(page: params[:page])
   end
 

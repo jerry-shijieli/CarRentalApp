@@ -1,7 +1,7 @@
 class Car < ApplicationRecord
     
   enum styles: [:Coupe, :Sedan, :SUV]
-  enum statuses: [:CheckedOut, :Available, :Reserved]
+  enum statuses: [:CheckedOut, :Available, :Reserved, :Suggested]
 
   validates :licensePlateNumber, presence: true, uniqueness: {case_sensitive: false}, length: {is: 7}
   validates :manufacturer, presence: true
@@ -13,6 +13,10 @@ class Car < ApplicationRecord
   
   def isAvailable?
     status == "Available"
+  end
+  
+  def isSuggested?
+    status == "Suggested"
   end
   
 end

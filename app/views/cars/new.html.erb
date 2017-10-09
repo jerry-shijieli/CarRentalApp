@@ -1,5 +1,9 @@
 <% provide(:title, "Add new car") %>
-<h1>Add new car</h1>
+<% if isAdmin? || isSuperAdmin? %>
+  <h1>Add new car</h1>
+<% else %>
+  <h1>Suggest new car</h1>
+<% end %>
 
 <%= render 'form' %>
 

@@ -16,6 +16,8 @@
               <li><%= link_to "Search & view cars", cars_path %></li>
               <% if isAdmin? || isSuperAdmin? %>
                 <li><%= link_to "Add new car", new_car_path %></li>
+              <% elsif isCustomer? %>
+                <li><%= link_to "Suggest new car", new_car_path %></li>
               <% end %>
             </ul>
           </li>

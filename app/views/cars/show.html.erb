@@ -28,7 +28,11 @@
   <%= link_to 'Reserve', new_reservation_path(:car_id => @car.id) %> |
 <% end %>
 <% if isAdmin? || isSuperAdmin? %>
-  <%= link_to 'Edit', edit_car_path(@car) %> |
+  <% if @car.isSuggested? %>
+    <%= link_to 'Approve', edit_car_path(@car) %> |
+  <% else %>
+    <%= link_to 'Edit', edit_car_path(@car) %> |
+  <% end %>
   <%= link_to "Delete", @car, method: :delete, data: { confirm: "Delete this car?" } %> |
 <% end %>
 <%= link_to 'List', cars_path %> |
