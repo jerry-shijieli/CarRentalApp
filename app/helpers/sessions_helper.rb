@@ -20,6 +20,7 @@ module SessionsHelper
   def log_out
       session.delete(:user_id)
       session.delete(:user_role)
+      session.delete(:forwarding_url)
       @current_user = nil
   end
   
@@ -50,9 +51,20 @@ module SessionsHelper
   
   # Confirms the correct user.
   def correct_user
-    @user = User.find(session[:user_id])
-    # @user = User.find(params[:id])
-    redirect_to(root_url) unless current_user?(@user)
+    # @user = User.find(session[:user_id])
+    unless (isAdmin? || isSuperAdmin?)
+      if params[:id] == nil
+        flash[:danger] = "You're not valid to perform such operations. Please login as Admin or SuperAdmin to move on."
+        redirect_to login_url
+        return
+      end
+      @user = User.find(params[:id])
+      unless current_user?(@user)
+        flash[:danger] = "You cannot view or edit other user's info."
+        redirect_to current_user
+        return
+      end
+    end
   end
   
   # Check if current user is Admin
@@ -69,7 +81,7 @@ module SessionsHelper
   def logged_in_as_admin
     unless (isAdmin? || isSuperAdmin?)
       store_location
-      flash[:danger] = "Please login Admin or SuperAdmin to move on."
+      flash[:danger] = "Please login as Admin or SuperAdmin to move on."
       redirect_to login_url
     end
   end

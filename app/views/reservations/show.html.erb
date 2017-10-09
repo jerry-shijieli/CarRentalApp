@@ -50,7 +50,8 @@
 
 <% # buttons that display on customer view %>
 <% if @reservation.reservationStatus == "Awaiting" %>
-    <%= button_to "pickup", pickup_reservation_path(@reservation), :method => :put %>
+    <%= button_to "check out", pickup_reservation_path(@reservation), :method => :put %>
+    <%= button_to "cancel", cancel_reservation_path(@reservation), :method => :put %>
 <% end %>
 
 <% if @reservation.reservationStatus == "Active" %>
@@ -58,7 +59,6 @@
 <% end %>
 
 <%if isAdmin? || isSuperAdmin? %>
-  <%= link_to 'Edit', edit_reservation_path(@reservation) %> |
   <%= link_to 'Delete', @reservation, method: :delete, data: { confirm: "Delete this reservation?" } %> |
 <% elsif isCustomer? && !["Active","Complete","Cancel"].include?(@reservation.reservationStatus) %>
   <%= link_to 'Cancel', edit_reservation_path(@reservation) %> |

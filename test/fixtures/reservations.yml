@@ -4,8 +4,15 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one: 
+  checkOutTime: "2017-10-04 20:11:10 -400"
+  pickUpTime: "2017-10-04 20:21:10 -400"
+  expectedReturnTime: "2017-10-04 23:11:10 -400"
+  returnTime: "2017-10-04 23:01:10 -400"
+  reservationStatus: "Complete"
+  user_id: 980190962
+  car_id: 980190962
 # column: value
 #
-two: {}
+# two: {}
 # column: value

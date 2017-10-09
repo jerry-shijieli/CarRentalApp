@@ -4,8 +4,15 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one: 
+  licensePlateNumber: 9F4J1LN,
+  manufacturer: "HERO HONDA MOTORS LTD"
+  model: "model5"
+  hourlyRentalRate: 240.4
+  style: "SUV"
+  location: "67948-9956"
+  status: Available
 # column: value
 #
-two: {}
+# two: {}
 # column: value

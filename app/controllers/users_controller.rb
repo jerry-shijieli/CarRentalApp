@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include UsersHelper
   
   before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:index, :edit, :update]
+  before_action :correct_user,   only: [:index, :show, :edit, :update]
   before_action :logged_in_as_admin, only: [:index]
   before_action :can_destroy, only: [:destroy]
 

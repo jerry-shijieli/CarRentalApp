@@ -253,6 +253,7 @@ DEPENDENCIES
   rails (~> 5.1.4)
   rails-controller-testing
   ransack
+  redis (~> 3.0)
   resque
   resque-scheduler
   sass-rails (~> 5.0)

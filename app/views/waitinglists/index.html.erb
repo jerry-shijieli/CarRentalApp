@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Email Notification</h1>
+
+<table class="table">
+  <thead class="thead-default">
+    <tr>
+      
+      <th>car</th>
+      <th>user</th>
+      <th>email</th>
+      <th>status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @waitinglists.each do |waitinglist| %>
+      <tr>
+        
+        <td><%= link_to Car.find_by_id(waitinglist.car_id).licensePlateNumber, Car.find_by_id(waitinglist.car_id) %></td>
+        <td><%= link_to User.find_by_id(waitinglist.user_id).name, User.find_by_id(waitinglist.user_id) %></td>
+        <td><%= User.find_by_id(waitinglist.user_id).email %></td>
+        <td><%= waitinglist.status %></td>
+        <td><%= link_to 'Show', waitinglist %></td>
+        <% if isAdmin? || isSuperAdmin? %>
+          <td><%= link_to 'Edit', edit_waitinglist_path(waitinglist) %></td>
+          <td><%= link_to 'Destroy', waitinglist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# = link_to 'New waitinglist', cars_path %>

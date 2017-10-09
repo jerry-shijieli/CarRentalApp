@@ -1,0 +1,7 @@
+<% provide(:title, "Edit") %>
+<h1>Edit user profile</h1>
+
+<%= render 'form', waitinglist: @waitinglist %>
+
+<%= link_to 'Show', @waitinglist %> |
+<%= link_to 'Back', waitinglists_path %>

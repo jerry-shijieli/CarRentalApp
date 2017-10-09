@@ -12,11 +12,11 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
+    @q_reservations = Reservation.ransack(params[:q])
     if isAdmin? || isSuperAdmin?
-      @q_reservations = Reservation.ransack(params[:q])
       @reservations = @q_reservations.result().paginate(page: params[:page])
     else
-      @reservations = Reservation.where(:user_id => session[:user_id]) || [] # return current user record or empty
+      @reservations = @q_reservations.result().where(:user_id => session[:user_id]).paginate(page: params[:page]) || [] # return current user record or empty
     end
   end
 
@@ -56,6 +56,7 @@ class ReservationsController < ApplicationController
       @reservation = Reservation.new(reservation_params)
       if @reservation.save
         flash[:success] = 'Reservation was successfully created.'
+        # UserMailer.welcome_email(user).deliver
         PickupCheckJob.set(wait_until: @reservation.checkOutTime + 30.minutes).perform_later(@reservation.id)
         redirect_to @reservation
         car = Car.find(@reservation.car_id)
@@ -121,6 +122,14 @@ class ReservationsController < ApplicationController
       user = User.find(@reservation.user_id)
       car = Car.find(@reservation.car_id)
       car.update_attribute(:status, "Available")
+      
+      # send email notification if someone is waiting
+      Waitinglist.where({car_id: car.id, status: "Awaiting"}).find_each do |wait|
+        UserMailer.car_available(User.find(wait.user_id), Car.find(wait.car_id)).deliver
+        wait.update_attribute(:status, "Complete")
+      end
+      
+      # calculate charge
       price = car.hourlyRentalRate
       hold_time = (@reservation.returnTime - @reservation.pickUpTime)/3600.0 # convert to hours
       charge = user.rentalCharge + price*hold_time
@@ -142,6 +151,14 @@ class ReservationsController < ApplicationController
     if @reservation.update_attribute(:reservationStatus, "Cancel")
       User.find(@reservation.user_id).update_attribute(:available, true)
       Car.find(@reservation.car_id).update_attribute(:status, "Available")
+      
+      # send email notification if someone is waiting
+      car = Car.find(@reservation.car_id)
+      Waitinglist.where({car_id: car.id, status: "Awaiting"}).find_each do |wait|
+        UserMailer.car_available(User.find(wait.user_id), Car.find(wait.car_id)).deliver
+        wait.update_attribute(:status, "Complete")
+      end
+      
       flash[:success] = "Reservation successfully canceled!"
       redirect_to @reservation
     end

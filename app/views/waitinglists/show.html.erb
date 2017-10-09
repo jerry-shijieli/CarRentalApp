@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Car Plate Number:</strong>
+  <%=  Car.find(@waitinglist.car_id).licensePlateNumber %>
+</p>
+
+<p>
+  <strong>User name:</strong>
+  <%=  User.find(@waitinglist.user_id).name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%=  User.find(@waitinglist.user_id).email %>
+</p>
+
+<p>
+  <strong>status:</strong>
+  <%= @waitinglist.status %>
+</p>
+
+<%= button_to "cancel", cancel_waitinglist_path(@waitinglist), :method => :put %>
+
+<%if isAdmin? || isSuperAdmin? %>
+  <%= link_to 'Edit', edit_waitinglist_path(@waitinglist, :car_id => @waitinglist.car_id) %> |
+<% end %>
+<%= link_to 'Back', cars_path %>

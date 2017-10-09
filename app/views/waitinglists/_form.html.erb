@@ -1,0 +1,37 @@
+<%= form_for(@waitinglist) do |f| %>
+  <% if @waitinglist.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        The form contains <%= pluralize(@waitinglist.errors.count, "error") %>.
+      </div>
+      <ul>
+      <% @waitinglist.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <% if @waitinglist.car_id.blank? %>
+    <% car_id = params[:car_id] %>
+  <% else %>
+    <% car_id = @waitinglist.car_id %>
+  <% end %>
+  
+  <%= f.label "Car plate number:" %>
+  <%= Car.find(car_id).licensePlateNumber %><br>
+  
+  <% if isAdmin? || isSuperAdmin? %>
+      <%= f.collection_select :user_id, User.all, :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select user id"} %><br>
+    <% else %>
+      <%= f.hidden_field :user_id, value: session[:user_id] %><br>
+      <%= f.label "Email Address" %>
+      <%= User.find(session[:user_id]).email %>
+  <% end %>
+  
+  <%= f.hidden_field :car_id, value: car_id%>
+  <%= f.hidden_field :status, value: :Awaiting %><br>
+  
+  <%= f.submit "add waiting list", class: "btn btn-primary" %>
+<% end %>
+

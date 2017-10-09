@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  get 'waitinglists/new'
+
+  get 'waitinglists/_form'
+
+  get 'waitinglists/edit'
+
+  get 'waitinglists/show'
+
+  get 'waitinglists/index'
+
   root 'static_pages#home'
   
   get '/login' => 'sessions#new'
@@ -25,6 +35,12 @@ Rails.application.routes.draw do
   end
   patch 'reservations/:id/cancel' => 'reservations#cancel'
   post 'reservations/:id/cancel' => 'reservations#cancel'
+  
+  resources :waitinglists do
+    member do
+      put 'cancel'
+    end
+  end
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

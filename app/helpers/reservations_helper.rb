@@ -30,9 +30,10 @@ module ReservationsHelper
   
   def display_reservation_search_results_row(object)
     fieldCount = 0
-    reservation_fields.each_with_object('') do |field, string|
+    display = ""
+    reservation_fields.each_with_object(display) do |field, string|
       if fieldCount == 0
-        string << content_tag(:td, link_to(object.send(field), '/reservations/' + object.id.to_s))
+        string << content_tag(:td, link_to("#"+object.send(field).to_s, '/reservations/' + object.id.to_s))
       elsif field == :user_id
         uid = object.send(field)
         user = User.find_by_id(uid)
@@ -50,7 +51,8 @@ module ReservationsHelper
       fieldCount += 1
       
     end
-    .html_safe
+    display << content_tag(:td, link_to("show", '/reservations/' + object.id.to_s))
+    display.html_safe
   end
   
 end

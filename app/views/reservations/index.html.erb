@@ -1,6 +1,6 @@
 <% provide(:title, 'All reservations') %>
-<h1>View and Search reservations</h1>
 
+<h1>View and Search reservations</h1>
 <%= search_form_for @q_reservations do |f| %>
   
   <%= f.label "User id and name: " %>
@@ -9,7 +9,7 @@
   <% elsif isAdmin? %>
     <%= f.collection_select :user_id_eq, User.where.not(role: "SuperAdmin"), :id, lambda {|u| "#{u.id}- #{u.name}"}, {:prompt => "Please select a user"} %><br>
   <% else %>
-    <%= "#{current_user.id}- #{current_user.name}" %>
+    <%= "#{current_user.id}- #{current_user.name}" %><br>
   <% end %>
   <%= f.label "Car licensePlateNumber: " %>
   <%= f.collection_select :car_id_eq, Car.all, :id, lambda {|c| "#{c.licensePlateNumber}"}, {:prompt => "Please select a car"} %><br>

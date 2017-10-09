@@ -37,11 +37,11 @@
   <%= form.label "Expected return time:" %> <br>
   <%= form.datetime_select :expectedReturnTime, id: :reservation_expectedReturnTime %><br>
   
-  <% if isAdmin? || isSuperAdmin? %>
+  <% if (isAdmin? || isSuperAdmin?) && false %>
     <%= form.label "Reservation status:" %> <br>
     <%= form.collection_select :reservationStatus, Reservation.reservationStatuses, :first, :first, {:prompt => "Please select reservation status"} %><br>
   <% end %>
-
+  <br>
   <%= form.submit "Make a reservation", class: "btn btn-primary" %><br>
     
 <% end %>

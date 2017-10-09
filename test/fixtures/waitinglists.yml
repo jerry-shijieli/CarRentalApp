@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  car_id: 5
+  status: MyString
+
+# two:
+#   userid: 
+#   carid: 
+#   status: MyString

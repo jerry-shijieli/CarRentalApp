@@ -26,6 +26,8 @@
 
 <% if @car.isAvailable? %>
   <%= link_to 'Reserve', new_reservation_path(:car_id => @car.id) %> |
+<% elsif !@car.isSuggested? %>
+  <%= link_to 'Add Email Notification', new_waitinglist_path(:car_id => @car.id) %> |
 <% end %>
 <% if isAdmin? || isSuperAdmin? %>
   <% if @car.isSuggested? %>
