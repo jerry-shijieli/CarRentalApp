@@ -15,7 +15,7 @@ Features:
 
 App Entity-Relationship Diagram
 
-<img style="center" src="https://github.ncsu.edu/sli41/CarRentalApp/blob/master/ER_Diagram/relationship.png" height="400" />
+<img style="center" src="https://github.com/jerry-shijieli/CarRentalApp/blob/master/ER_Diagram/relationship.png" height="400" />
 
 
 ## Usage
